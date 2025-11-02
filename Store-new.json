@@ -1,6 +1,6 @@
 {
-    "name": "墨殇的仓库",
-    "icon": "",
+    "name": "c-wharehouse",
+    "icon": "https://avatars.githubusercontent.com/u/82284393?v=4",
     "list": "https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/master/Store.json",
     "push": "https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/master/msg/msg.json",
     "markdown": "https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/master/README.md",

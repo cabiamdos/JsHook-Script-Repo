@@ -1,72 +1,79 @@
 const fs = require('fs');
+const uuid = require('uuid');
 
 /**
- * 从文件内容中提取信息并生成存储对象
- * @param {string} filePath 文件路径
- * @returns {Array<Object>|null} 存储对象的数组，如果无法提取信息则返回null
+ * Extract information from file content and generate storage objects.
+ * @param {string} filePath File Path
+ * @returns {Array<Object>|null} An array storing objects; returns null if no information can be retrieved.
  */
 function generateStoreObject(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8');
 
-    const nameMatch = content.match(/^# 名称\s+(.*)$/m);
+    const nameMatch = content.match(/^# (Name|名称)\s+(.*)$/m);
     const versionMatch = content.match(/^# Version\s+(.*)$/m);
-    const scriptTypeMatch = content.match(/^# 脚本类型\s+(.*)$/m);
-    const authorMatch = content.match(/^# 作者\s+@(.*)$/m);
-    const descriptionMatch = content.match(/^# 描述\s+([\s\S]*?)# 作者/m);
-    const ctimeMatch = content.match(/^# 更新时间\s+(.*)$/m);
+    const scriptTypeMatch = content.match(/^# (Script Type|脚本类型)\s+(.*)$/m);
+    const authorMatch = content.match(/^# (Author|作者)\s+@(.*)$/m);
+    const descriptionMatch = content.match(/^# (Description|描述)\s+([\s\S]*?)# (Author|作者)/m);
+    const ctimeMatch = content.match(/^# (Created date|更新时间)\s+(.*)$/m);
 
+   
     if (!nameMatch || !versionMatch || !scriptTypeMatch || !authorMatch || !descriptionMatch || !ctimeMatch) {
         return null;
     }
 
-    const name = nameMatch[1];
-    const version = versionMatch[1];
-    const scriptType = scriptTypeMatch[1];
-    const author = authorMatch[1];
-    const description = descriptionMatch[1];
-    const ctime = ctimeMatch[1];
+    const name = nameMatch[2];
+    const version = versionMatch[2];
+    const scriptType = scriptTypeMatch[2];
+    const author = authorMatch[2];
+    const description = descriptionMatch[2];
+    const ctime = ctimeMatch[2];
     // 取102-999随机数
     const down_count = Math.floor(Math.random() * 898) + 102;
-    const branch = "master";
+    const branch = "main";
+    const githubUser = 'cabiamdos'
     const store = {
         "author": author,
-        "markdown": `https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/${branch}/Scripts/${name}/README.md`,
+        "markdown": `https://raw.githubusercontent.com/${githubUser}/JsHook-Script-Repo/${branch}/Scripts/${name}/README.md`,
         "ctime": ctime,
-        "source": `https://github.com/bcmdy/JsHook-Script-Repo/tree/${branch}/Scripts/${name}`,
-        "id": name,
+        "source": `https://github.com/${githubUser}/JsHook-Script-Repo/tree/${branch}/Scripts/${name}`,
+        "id": uuid.v3(name, uuid.v3.DNS),
         "title": name,
         "type": scriptType,
         "version": version,
-        "url": `https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/${branch}/Scripts/${name}/${scriptType}.js`,
+        "url": `https://raw.githubusercontent.com/${githubUser}/JsHook-Script-Repo/${branch}/Scripts/${name}/${scriptType}.js`,
         "desc": description,
         "down_count": down_count
     };
     // const store_cdn = {
     //     "author": author,
-    //     "markdown": "https://cdn.jsdelivr.net/gh/bcmdy/JsHook-Script-Repo@" + branch + "/Scripts/" + name + "/README.md",
+    //     "markdown": "https://cdn.jsdelivr.net/gh/${githubUser}/JsHook-Script-Repo@" + branch + "/Scripts/" + name + "/README.md",
     //     "ctime": ctime,
-    //     "source": "https://github.com/bcmdy/JsHook-Script-Repo/tree/" + branch + "/Scripts/" + name,
+    //     "source": "https://github.com/${githubUser}/JsHook-Script-Repo/tree/" + branch + "/Scripts/" + name,
     //     "id": name,
     //     "title": name,
     //     "type": scriptType,
     //     "version": version,
-    //     "url": "https://cdn.jsdelivr.net/gh/bcmdy/JsHook-Script-Repo@" + branch + "/Scripts/" + name + "/" + scriptType + ".js",
+    //     "url": "https://cdn.jsdelivr.net/gh/${githubUser}/JsHook-Script-Repo@" + branch + "/Scripts/" + name + "/" + scriptType + ".js",
     //     "desc": description,
     //     "down_count": down_count
     // };
     const store_cdn = {
         "author": author,
-        "markdown": `https://gh-proxy.com/https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/${branch}/Scripts/${name}/README.md`,
+        "markdown": `https://gh-proxy.com/https://raw.githubusercontent.com/${githubUser}/JsHook-Script-Repo/${branch}/Scripts/${name}/README.md`,
         "ctime": ctime,
-        "source": `https://github.com/bcmdy/JsHook-Script-Repo/tree/${branch}/Scripts/${name}`,
-        "id": name,
+        "source": `https://github.com/${githubUser}/JsHook-Script-Repo/tree/${branch}/Scripts/${name}`,
+        "id": uuid.v3(name, uuid.v3.DNS),
         "title": name,
         "type": scriptType,
         "version": version,
-        "url": `https://gh-proxy.com/https://raw.githubusercontent.com/bcmdy/JsHook-Script-Repo/${branch}/Scripts/${name}/${scriptType}.js`,
+        "url": `https://gh-proxy.com/https://raw.githubusercontent.com/${githubUser}/JsHook-Script-Repo/${branch}/Scripts/${name}/${scriptType}.js`,
         "desc": description,
         "down_count": down_count
     };
+    // if (nameMatch[0].includes('first_script')) {
+        console.log('are we here ', nameMatch)
+        // console.log('are we here ', nameMatch, store, store_cdn)
+    // }
     return [store, store_cdn];
 }
 
@@ -74,7 +81,8 @@ function main() {
     const stores = [];
     const stores_cdn = [];
     let allFiles = getAllFiles('./Scripts');
-    console.log(`文件数量:${allFiles.length}`);
+    console.log(`文件数量|Number of files: ${allFiles.length}`);
+    // return
     for (let i = 0; i < allFiles.length; i++) {
         if (allFiles[i].indexOf("README.md") >= 0 && allFiles[i] != "./README.md") {
             // 生成存储对象

@@ -2,5 +2,8 @@
     "scripts": {
         "Ai_build": "node buildstore.js",
         "bak_build": "node buildstore_bak.js"
+    },
+    "dependencies": {
+        "uuid": "^13.0.0"
     }
 }
