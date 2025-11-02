@@ -28,6 +28,8 @@ jobs:
         with:
           node-version: 20
       # 运行构建脚本
+      - name: 🏫 Install dependencies
+        run: npm i
       - name: 🔨 构建仓库文件
         run: node ./buildstore.js
       # 提交更改到远程仓库
