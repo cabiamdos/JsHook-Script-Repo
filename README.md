@@ -1,6 +1,8 @@
 ## JsHook script repository JsHook-Script-Repo
 
-- The warehouse script is for learning reference only, please do not use it for illegal purposes### It is recommended to use the github warehouse for self-built warehouses. There is a delay in CDN warehouse refresh#### New version warehouse address (V1.1.5+)
+- The warehouse script is for learning reference only, please do not use it for illegal purposes
+### It is recommended to use the github warehouse for self-built warehouses. There is a delay in CDN warehouse refresh
+#### New version warehouse address (V1.1.5+)
 
 - **github (usually you need to climb the wall):**
 
