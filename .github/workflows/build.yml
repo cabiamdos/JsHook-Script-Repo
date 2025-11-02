@@ -43,6 +43,7 @@ jobs:
       # 删除旧的标签
       - name: 🗑️ 删除旧标签
           # Deletes the most recent tag in the local repository
+        continue-on-error: true
         run: |
           git fetch --tags
           if [ -z "master" ]; then
