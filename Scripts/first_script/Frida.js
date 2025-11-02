@@ -1,0 +1,3 @@
+// 2025/10/03 21:49:15
+// write your script...
+console.log('this is our first script')
