@@ -11,5 +11,5 @@ Java.perform(function() {
     fingerprint: Java.use("android.os.Build").FINGERPRINT.value
   }
 
-  console.log({build})
+  console.log(JSON.stringify(build,null, 2))
 })
