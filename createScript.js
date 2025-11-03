@@ -71,7 +71,7 @@ async function main() {
   const scriptProperties = {
     author: values?.author ?? author,
     ctime: formatDate(),
-    version: 1.0,
+    version: '1.0',
     type: values?.type ?? 'Frida',
     description: values?.description ?? 'edit me',
     name: values?.name
